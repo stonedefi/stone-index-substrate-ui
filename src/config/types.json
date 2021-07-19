@@ -1,4 +1,13 @@
 {
-"Address": "MultiAddress",
-"LookupSource": "MultiAddress"
+    "Address": "MultiAddress",
+    "LookupSource": "MultiAddress",
+    "StoneIndexComponent": {
+        "assetId": "AssetId",
+        "weight": "u32"
+    },
+    "StoneIndex": {
+        "stoneId": "AssetId",
+        "name": "Vec<u8>",
+        "components": "Vec<StoneIndexComponent>"
+    }
 }
