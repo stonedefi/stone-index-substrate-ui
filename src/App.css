@@ -1,0 +1,46 @@
+@import '~antd/dist/antd.css';
+
+  .logo {
+    height: 32px;
+    margin: 16px;
+    /* background: rgba(255, 255, 255, 0.2); */
+  }
+  
+  .site-layout-sub-header-background {
+    background: #fff;
+  }
+  
+  .site-layout-background {
+    background: #fff;
+  }
+  .manage-container {
+    margin: 0 auto 25px auto;
+    padding: 15px;
+    width: 800px;
+    border: 1px solid #f0f0f0;
+  }
+  .botBut {
+    width: 100%;
+    text-align: center;
+  }
+  .but {
+    width: 30%;
+    margin-top: 12px;
+  }
+  .divName {
+    font-size: 24px;
+  }
+  .per {
+    font-size: 18px;
+  }
+  .buy-sell {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .bsbut {
+    width: 25%;
+  }
+  .mtpx {
+    margin-top: 12px;
+  }
