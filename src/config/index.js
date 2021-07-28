@@ -14,5 +14,15 @@ const envVars = envVarNames.reduce((mem, n) => {
   return mem;
 }, {});
 
-const config = { ...configCommon, ...configEnv, ...envVars, types };
+const config = {
+  ...configCommon,
+  ...configEnv,
+  ...envVars,
+  types,
+  typesAlias: {
+    assets: {
+      Balance: 'u64'
+    }
+  }
+};
 export default config;
