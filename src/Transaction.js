@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Space, Divider, Input, Button, BackTop } from 'antd';
 import { useSubstrate } from './substrate-lib';
+import { web3FromSource } from '@polkadot/extension-dapp';
 
 function Transaction(props) {
     const { api } = useSubstrate();
@@ -40,6 +41,25 @@ function SubTransaction(props) {
     const [unsub, setUnsub] = useState(null);
     const sum = components.reduce((sum, cur) => sum + Number(cur.weight || 0), 0)
 
+    const getFromAcct = async () => {
+      const {
+        address,
+        meta: { source, isInjected }
+      } = accountPair;
+      let fromAcct;
+  
+      // signer is from Polkadot-js browser extension
+      if (isInjected) {
+        const injected = await web3FromSource(source);
+        fromAcct = address;
+        api.setSigner(injected.signer);
+      } else {
+        fromAcct = accountPair;
+      }
+  
+      return fromAcct;
+    };
+
     const txResHandler = ({ events = [], status }) => {
         if (status.isFinalized) {
           setStatus(`😉 Finalized. Block hash: ${status.asFinalized.toString()}`);
@@ -52,32 +72,36 @@ function SubTransaction(props) {
         }
       };
     
-      const txErrHandler = err =>
-        setStatus(`😞 Transaction Failed: ${err.toString()}`);
-    
-      const buyTransaction = async () => {
-        if (unsub) {
-          unsub();
-          setUnsub(null);
-        }
-    
-        setStatus('Sending...');
-        const newUnsub = await api.tx.stoneIndex.buyIndex(indexId, amountValue).signAndSend(accountPair, txResHandler)
-          .catch(txErrHandler);
-        setUnsub(() => newUnsub);
-      };
-    
-      const sellTransaction = async () => {
-        if (unsub) {
-          unsub();
-          setUnsub(null);
-        }
-    
-        setStatus('Sending...');
-        const newUnsub = await api.tx.stoneIndex.sellIndex(indexId, amountValue).signAndSend(accountPair, txResHandler)
-          .catch(txErrHandler);
-        setUnsub(() => newUnsub);
-      };
+    const txErrHandler = err =>
+      setStatus(`😞 Transaction Failed: ${err.toString()}`);
+  
+    const buyTransaction = async () => {
+      const fromAcct = await getFromAcct();
+
+      if (unsub) {
+        unsub();
+        setUnsub(null);
+      }
+  
+      setStatus('Sending...');
+      const newUnsub = await api.tx.stoneIndex.buyIndex(indexId, amountValue).signAndSend(fromAcct, txResHandler)
+        .catch(txErrHandler);
+      setUnsub(() => newUnsub);
+    };
+  
+    const sellTransaction = async () => {
+      const fromAcct = await getFromAcct();
+
+      if (unsub) {
+        unsub();
+        setUnsub(null);
+      }
+  
+      setStatus('Sending...');
+      const newUnsub = await api.tx.stoneIndex.sellIndex(indexId, amountValue).signAndSend(fromAcct, txResHandler)
+        .catch(txErrHandler);
+      setUnsub(() => newUnsub);
+    };
 
     useEffect(() => {
         let unsubscribe;

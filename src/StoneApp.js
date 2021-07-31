@@ -87,7 +87,7 @@ function Main() {
                                     <Transaction accountPair={accountPair} />
                                 </Route>
                                 <Route exact stric path="/management">
-                                    <Management />
+                                    <Management accountPair={accountPair} />
                                 </Route>
                                 <Route exact stric path="/">
                                     <Redirect to="/transaction" />
