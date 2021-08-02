@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Space, Divider, Input, Button, BackTop } from 'antd';
 import { useSubstrate } from './substrate-lib';
+import { coin } from './config/coin'
 
 function Transaction(props) {
     const { api } = useSubstrate();
@@ -98,7 +99,7 @@ function SubTransaction(props) {
                 <Space split={<Divider type="vertical" />}>
                     {components.map((comp, _) => (
                         <div className="per" key={indexId + '_' + comp.assetId.toNumber()}>
-                            {comp.assetId.toNumber()}&nbsp;&nbsp;&nbsp;
+                            {coin[comp.assetId.toNumber()]}&nbsp;&nbsp;&nbsp;
                             {((comp.weight.toNumber() / sum) * 100).toFixed()} %
                         </div>
                     ))}
