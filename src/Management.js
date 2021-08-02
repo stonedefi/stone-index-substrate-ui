@@ -4,23 +4,47 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSubstrate } from './substrate-lib';
 import { coin } from './config/coin'
 const { Option } = Select
-function Management() {
+
+import { web3FromSource } from '@polkadot/extension-dapp';
+
+function Management(props) {
     const { api } = useSubstrate();
+    const { accountPair } = props;
     const [loadAdd, setLoadAdd] = useState(false);
     const [currentIndexes, setCurrentIndexes] = useState([]);
     const [form] = Form.useForm();
+
     const onFinish = async (values) => {
         const { name, id, assets } = values;
-        let alice = keyring.getPairs()[0];
+        const fromAcct = await getFromAcct();
         try {
             setLoadAdd(true)
-            await api.tx.stoneIndex.addIndex(id, name, assets).signAndSend(alice);
+            await api.tx.stoneIndex.addIndex(id, name, assets).signAndSend(fromAcct);
             setLoadAdd(false)
             message.success("Add Successed")
             form.resetFields()
         } catch (error) {
             message.success("Add Failed")
         }
+    };
+
+    const getFromAcct = async () => {
+        const {
+          address,
+          meta: { source, isInjected }
+        } = accountPair;
+        let fromAcct;
+    
+        // signer is from Polkadot-js browser extension
+        if (isInjected) {
+          const injected = await web3FromSource(source);
+          fromAcct = address;
+          api.setSigner(injected.signer);
+        } else {
+          fromAcct = accountPair;
+        }
+    
+        return fromAcct;
     };
 
     useEffect(() => {
@@ -151,7 +175,7 @@ function Management() {
             </div>
             <Divider orientation="left">Update</Divider>
             {currentIndexes.map((index, i) => (
-                <SubManage loadWho={i} indexId={index.stoneId.toNumber()} key={index.stoneId.toNumber()}
+                <SubManage accountPair={accountPair} loadWho={i} indexId={index.stoneId.toNumber()} key={index.stoneId.toNumber()}
                     indexName={index.name.toHuman()} components={index.components} />
             ))}
         </>
@@ -161,18 +185,37 @@ function Management() {
 function SubManage(props) {
     const { api } = useSubstrate();
     const [load, setLoad] = useState(-1);
-    const { indexName, indexId, components, loadWho } = props;
+    const { indexName, indexId, components, loadWho, accountPair } = props;
     const onFinish = async (values) => {
         const { name, id, assets } = values;
-        let alice = keyring.getPairs()[0];
+        const fromAcct = await getFromAcct();
         try {
             setLoad(loadWho)
-            await api.tx.stoneIndex.addIndex(id, name, assets).signAndSend(alice);
+            await api.tx.stoneIndex.addIndex(id, name, assets).signAndSend(fromAcct);
             setLoad(-1)
             message.success("Update Successed")
         } catch (error) {
             message.success("Update Failed")
         }
+    };
+
+    const getFromAcct = async () => {
+        const {
+          address,
+          meta: { source, isInjected }
+        } = accountPair;
+        let fromAcct;
+    
+        // signer is from Polkadot-js browser extension
+        if (isInjected) {
+          const injected = await web3FromSource(source);
+          fromAcct = address;
+          api.setSigner(injected.signer);
+        } else {
+          fromAcct = accountPair;
+        }
+    
+        return fromAcct;
     };
 
     return (
