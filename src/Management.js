@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Form, Input, Button, Row, Col, Divider, message, BackTop } from 'antd';
+import { Form, Input, Button, Row, Col, Divider, message, BackTop, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSubstrate } from './substrate-lib';
+import { coin } from './config/coin'
+const { Option } = Select
+
 import { web3FromSource } from '@polkadot/extension-dapp';
 
 function Management(props) {
@@ -116,7 +119,7 @@ function Management(props) {
                                     },
                                 ]}
                             >
-                                <Input />
+                                <Input type="number" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -132,7 +135,13 @@ function Management(props) {
                                                 fieldKey={[index, 'assetId']}
                                                 rules={[{ required: true, message: 'Missing Asset Id!' }]}
                                             >
-                                                <Input />
+                                                <Select
+                                                    placeholder="Select a Asset"
+                                                >
+                                                    {coin.map((item, index) => (
+                                                        <Option key={index} value={index}>{item}</Option>
+                                                    ))}
+                                                </Select>
                                             </Form.Item>
                                         </Col>
                                         <Col span={11}>
@@ -223,7 +232,7 @@ function SubManage(props) {
                 initialValues={{
                     name: indexName,
                     id: indexId,
-                    assets: components
+                    assets: JSON.parse(JSON.stringify(components))
                 }}
             >
                 <Row>
@@ -269,7 +278,13 @@ function SubManage(props) {
                                             fieldKey={[index, 'assetId']}
                                             rules={[{ required: true, message: 'Missing Asset Id!' }]}
                                         >
-                                            <Input />
+                                            <Select
+                                                placeholder="Select a Asset"
+                                            >
+                                                {coin.map((item, index) => (
+                                                    <Option key={index} value={index}>{item}</Option>
+                                                ))}
+                                            </Select>
                                         </Form.Item>
                                     </Col>
                                     <Col span={11}>
