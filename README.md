@@ -4,7 +4,16 @@
 1. Before starting the frontend, the [stone node server](https://github.com/stonedefi/stoneindex-node) need to be started. It can be launched in single node mode quickly by the following command:
 
     ```bash
+    git clone https://github.com/stonedefi/stoneindex-node.git
+    make init
+    make build
     cargo run -- --dev
+    ```
+
+    or run with docker:
+
+    ```bash
+    docker run --rm -p 9944:9944 raphaelyu/stone-index-substrate --dev --ws-external
     ```
 
 
