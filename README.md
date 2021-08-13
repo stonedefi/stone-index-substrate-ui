@@ -7,7 +7,7 @@
     git clone https://github.com/stonedefi/stoneindex-node.git
     make init
     make build
-    cargo run -- --dev
+    make run
     ```
 
     or run with docker:
