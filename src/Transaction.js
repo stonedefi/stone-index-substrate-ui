@@ -147,7 +147,7 @@ function SubTransaction(props) {
                     </Button></div>
                 <div className="bsbut">
                     <Button type="primary" block onClick={sellTransaction} danger
-                        disabled={Number(amountValue) === 0}
+                        disabled={Number(amountValue) === 0 || Number(amountValue) > Number(balance)}
                     >
                         Sell
                     </Button>
