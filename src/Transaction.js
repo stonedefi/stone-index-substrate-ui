@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Space, Divider, Input, Button, BackTop } from 'antd';
+import { Space, Divider, Input, Button, BackTop, message } from 'antd';
 import { useSubstrate } from './substrate-lib';
 import { coin } from './config/coin'
 import { web3FromSource } from '@polkadot/extension-dapp';
@@ -38,7 +38,6 @@ function SubTransaction(props) {
     const { accountPair, indexName, indexId, components } = props;
     const [amountValue, setAmountValue] = useState(0);
     const [balance, setBalance] = useState('');
-    const [status, setStatus] = useState(null);
     const [unsub, setUnsub] = useState(null);
     const sum = components.reduce((sum, cur) => sum + Number(cur.weight || 0), 0)
 
@@ -62,37 +61,37 @@ function SubTransaction(props) {
     };
 
     const txResHandler = ({ events = [], status }) => {
-        if (status.isFinalized) {
-          let errors = [];
-          events.filter(({ event }) => api.events.system.ExtrinsicFailed.is(event))
+      if (status.isFinalized) {
+        let errors = [];
+        events.filter(({ event }) => api.events.system.ExtrinsicFailed.is(event))
           .forEach(({ event: { data: [error, info] } }) => {
-            if (error.isModule) {
-              // for module errors, we have the section indexed, lookup
-              const decoded = api.registry.findMetaError(error.asModule);
-              const { documentation, name, section } = decoded;
+        if (error.isModule) {
+            const decoded = api.registry.findMetaError(error.asModule);
+            const { documentation, name, section } = decoded;
+            errors.push(`${section}.${name}: ${documentation.join(' ')}`);
+          } else {
+            errors.push(error.toString());
+          }
+        });
 
-              errors.push(`${section}.${name}: ${documentation.join(' ')}`);
-            } else {
-              // Other, CannotLookup, BadOrigin, no extra info
-              errors.push(error.toString());
-            }
-          });
-
+        if (errors.length) {
           let msg = `Finalized. Block hash: ${status.asFinalized.toString()}` 
-          + (errors.length ? '\nTransaction errors: ' + errors.join('\n') : '');
-
-          setStatus(msg);
-    
-          events.forEach(({ phase, event: { data, method, section } }) => {
-            console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
-          });
+            + '\nTransaction errors: ' + errors.join('\n');
+          message.error(msg, 20);        
         } else {
-          setStatus(`Current transaction status: ${status.type}`);
+          message.success(`Finalized. Block hash: ${status.asFinalized.toString()}`);
         }
-      };
+
+        events.forEach(({ phase, event: { data, method, section } }) => {
+          console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
+        });
+      } else {
+        message.loading(`Current transaction status: ${status.type}`, 5);
+      }
+  };
     
     const txErrHandler = err =>
-      setStatus(`Transaction Failed: ${err.toString()}`);
+      message.error(`Transaction Failed: ${err.toString()}`, 20);
   
     const buyTransaction = async () => {
       const fromAcct = await getFromAcct();
@@ -102,7 +101,7 @@ function SubTransaction(props) {
         setUnsub(null);
       }
   
-      setStatus('Sending...');
+      message.loading('Sending...');
       const newUnsub = await api.tx.stoneIndex.buyIndex(indexId, amountValue).signAndSend(fromAcct, txResHandler)
         .catch(txErrHandler);
       setUnsub(() => newUnsub);
@@ -116,7 +115,7 @@ function SubTransaction(props) {
         setUnsub(null);
       }
   
-      setStatus('Sending...');
+      message.loading('Sending...');
       const newUnsub = await api.tx.stoneIndex.sellIndex(indexId, amountValue).signAndSend(fromAcct, txResHandler)
         .catch(txErrHandler);
       setUnsub(() => newUnsub);
@@ -171,7 +170,6 @@ function SubTransaction(props) {
                     </Button>
                 </div>
             </div>
-            <div style={{ marginTop: '12px', overflowWrap: 'break-word' }}>{status}</div>
         </div>
     )
 }

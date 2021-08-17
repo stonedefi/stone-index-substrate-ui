@@ -14,17 +14,46 @@ function Management(props) {
     const [currentIndexes, setCurrentIndexes] = useState([]);
     const [form] = Form.useForm();
 
+    const txResHandler = ({ events = [], status }) => {
+        if (status.isFinalized) {
+            let errors = [];
+            events.filter(({ event }) => api.events.system.ExtrinsicFailed.is(event))
+            .forEach(({ event: { data: [error, info] } }) => {
+                if (error.isModule) {
+                    const decoded = api.registry.findMetaError(error.asModule);
+                    const { documentation, name, section } = decoded;
+                    errors.push(`${section}.${name}: ${documentation.join(' ')}`);
+                } else {
+                    errors.push(error.toString());
+                }
+            });
+
+            if (errors.length) {
+                let msg = `Finalized. Block hash: ${status.asFinalized.toString()}` 
+                    + '\nTransaction errors: ' + errors.join('\n');
+                message.error(msg, 20);        
+            } else {
+                message.success(`Finalized. Block hash: ${status.asFinalized.toString()}`);
+            }
+
+            events.forEach(({ phase, event: { data, method, section } }) => {
+                console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
+            });
+        } else {
+            message.loading(`Current transaction status: ${status.type}`, 5);
+        }
+    };
+    
     const onFinish = async (values) => {
         const { name, id, assets } = values;
         const fromAcct = await getFromAcct();
         try {
             setLoadAdd(true)
-            await api.tx.stoneIndex.addIndex(id, name, assets).signAndSend(fromAcct);
+            await api.tx.stoneIndex.addIndex(id, name, assets).signAndSend(fromAcct, txResHandler);
             setLoadAdd(false)
-            message.success("Add Successed")
             form.resetFields()
         } catch (error) {
-            message.success("Add Failed")
+            message.error(`Transaction Failed: ${err.toString()}`);
         }
     };
 
@@ -186,16 +215,46 @@ function SubManage(props) {
     const { api } = useSubstrate();
     const [load, setLoad] = useState(-1);
     const { indexName, indexId, components, loadWho, accountPair } = props;
+    
+    const txResHandler = ({ events = [], status }) => {
+        if (status.isFinalized) {
+            let errors = [];
+            events.filter(({ event }) => api.events.system.ExtrinsicFailed.is(event))
+            .forEach(({ event: { data: [error, info] } }) => {
+                if (error.isModule) {
+                    const decoded = api.registry.findMetaError(error.asModule);
+                    const { documentation, name, section } = decoded;
+                    errors.push(`${section}.${name}: ${documentation.join(' ')}`);
+                } else {
+                    errors.push(error.toString());
+                }
+            });
+
+            if (errors.length) {
+                let msg = `Finalized. Block hash: ${status.asFinalized.toString()}` 
+                    + '\nTransaction errors: ' + errors.join('\n');
+                message.error(msg, 20);        
+            } else {
+                message.success(`Finalized. Block hash: ${status.asFinalized.toString()}`);
+            }
+
+            events.forEach(({ phase, event: { data, method, section } }) => {
+                console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
+            });
+        } else {
+            message.loading(`Current transaction status: ${status.type}`, 5);
+        }
+    };
+
     const onFinish = async (values) => {
         const { name, id, assets } = values;
         const fromAcct = await getFromAcct();
         try {
             setLoad(loadWho)
-            await api.tx.stoneIndex.addIndex(id, name, assets).signAndSend(fromAcct);
+            await api.tx.stoneIndex.addIndex(id, name, assets).signAndSend(fromAcct, txResHandler);
             setLoad(-1)
-            message.success("Update Successed")
         } catch (error) {
-            message.success("Update Failed")
+            message.error(`Transaction Failed: ${err.toString()}`);
         }
     };
 
