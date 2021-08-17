@@ -63,7 +63,25 @@ function SubTransaction(props) {
 
     const txResHandler = ({ events = [], status }) => {
         if (status.isFinalized) {
-          setStatus(`😉 Finalized. Block hash: ${status.asFinalized.toString()}`);
+          let errors = [];
+          events.filter(({ event }) => api.events.system.ExtrinsicFailed.is(event))
+          .forEach(({ event: { data: [error, info] } }) => {
+            if (error.isModule) {
+              // for module errors, we have the section indexed, lookup
+              const decoded = api.registry.findMetaError(error.asModule);
+              const { documentation, name, section } = decoded;
+
+              errors.push(`${section}.${name}: ${documentation.join(' ')}`);
+            } else {
+              // Other, CannotLookup, BadOrigin, no extra info
+              errors.push(error.toString());
+            }
+          });
+
+          let msg = `Finalized. Block hash: ${status.asFinalized.toString()}` 
+          + (errors.length ? '\nTransaction errors: ' + errors.join('\n') : '');
+
+          setStatus(msg);
     
           events.forEach(({ phase, event: { data, method, section } }) => {
             console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
@@ -74,7 +92,7 @@ function SubTransaction(props) {
       };
     
     const txErrHandler = err =>
-      setStatus(`😞 Transaction Failed: ${err.toString()}`);
+      setStatus(`Transaction Failed: ${err.toString()}`);
   
     const buyTransaction = async () => {
       const fromAcct = await getFromAcct();
