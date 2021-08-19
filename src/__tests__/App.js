@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../StoneApp';
+import App from '../App';
 
 describe('App Test Suite', () => {
   it('renders without crashing', () => {

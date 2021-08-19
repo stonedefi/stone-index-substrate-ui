@@ -108,7 +108,7 @@ function Main () {
   );
 }
 
-export default function StoneApp () {
+export default function App () {
   return (
     <SubstrateContextProvider>
       <Main></Main>
