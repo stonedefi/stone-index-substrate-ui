@@ -7,7 +7,6 @@ import {
   Dropdown,
   Container,
   Icon,
-  Image,
   Label
 } from 'semantic-ui-react';
 

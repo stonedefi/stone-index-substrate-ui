@@ -8,6 +8,7 @@
     "StoneIndex": {
         "stoneId": "AssetId",
         "name": "Vec<u8>",
-        "components": "Vec<StoneIndexComponent>"
+        "components": "Vec<StoneIndexComponent>",
+        "owner": "AccountId"
     }
 }
