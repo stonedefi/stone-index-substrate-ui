@@ -64,6 +64,7 @@ function Main () {
           collapsedWidth="0"
         >
           <img className="logo" src={logo} alt='' />
+          <div data-testid="buy">ddd</div>
           <Menu
             theme="dark"
             mode="inline"

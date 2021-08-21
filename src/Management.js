@@ -83,7 +83,7 @@ function Management (props) {
     }).then(unsub => {
       unsubscribe = unsub;
     }).catch(console.error);
-    // 提交后查询数据不会马上刷新，有延时
+    // The query data will not be refreshed immediately after submission, there is a delay
     setTimeout(() => {
       api.query.stoneIndex.indexes.entries(newValue => {
         setCurrentIndexes(newValue.map(i => i[1]));
