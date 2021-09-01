@@ -75,8 +75,8 @@ function SubTransaction (props) {
         });
 
       if (errors.length) {
-        const msg = `Finalized. Block hash: ${status.asFinalized.toString()}
-        Transaction errors: errors`;
+        const msg = `Finalized. Block hash: ${status.asFinalized.toString()}` +
+          '\nTransaction errors: ' + errors.join('\n');
         message.error(msg, 20);
       } else {
         message.success(`Finalized. Block hash: ${status.asFinalized.toString()}`);
