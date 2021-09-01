@@ -1,6 +1,4 @@
 {
-    "Address": "MultiAddress",
-    "LookupSource": "MultiAddress",
     "StoneIndexComponent": {
         "assetId": "AssetId",
         "weight": "u32"
