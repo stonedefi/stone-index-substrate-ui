@@ -3901,12 +3901,12 @@ __metadata:
   linkType: hard
 
 "are-we-there-yet@npm:~1.1.2":
-  version: 1.1.5
-  resolution: "are-we-there-yet@npm:1.1.5"
+  version: 1.1.6
+  resolution: "are-we-there-yet@npm:1.1.6"
   dependencies:
     delegates: ^1.0.0
-    readable-stream: ^2.0.6
-  checksum: 2d6fdb0ddde9b8cb120b6851b42c75f6b6db78b540b579a00d144ad38cb9e1bdf1248e5454049fcf5b47ef61d1a6f2ea433a8e38984158afd441bc1e0db7a625
+    readable-stream: ^3.6.0
+  checksum: f316cb376b26825c133131973f76d6d3ddb1ac6b77401657e470cc6e66c9d8f2697f1b734328fb60ac5a3911393286ccc110bd188873a04e55fb44203b2f582e
   languageName: node
   linkType: hard
 
@@ -5594,19 +5594,19 @@ __metadata:
   linkType: hard
 
 "core-js-compat@npm:^3.14.0, core-js-compat@npm:^3.16.0, core-js-compat@npm:^3.6.2":
-  version: 3.16.4
-  resolution: "core-js-compat@npm:3.16.4"
+  version: 3.17.1
+  resolution: "core-js-compat@npm:3.17.1"
   dependencies:
     browserslist: ^4.16.8
     semver: 7.0.0
-  checksum: c5dca6ea14cec28d9ec77b15716fcb93bd1a383e3992ab93b6f63fcf87668a8f1e002d44f766698252ff903baec8afd20d90ffdccb3a2ecc828e0d849e9067d7
+  checksum: e95b8a537d29956c097feba127114cbebaeeaedd4dec4688455f148b26c9703d8f6f75b257812a2422f9554439f41a687df13dc60cdd5199b0f8d3d5be79b43d
   languageName: node
   linkType: hard
 
 "core-js-pure@npm:^3.16.0":
-  version: 3.16.4
-  resolution: "core-js-pure@npm:3.16.4"
-  checksum: 8007b04dbb309d75249c4a1a117ff5822706f1117672ee3861122031a521f6530afddaaa48759f425764ad7d81559d6586dbd91c20b19ff37c6d16263a78f8d0
+  version: 3.17.1
+  resolution: "core-js-pure@npm:3.17.1"
+  checksum: 905786641ad818b5f9b876982428b8104e5d9dc21ae3fec6a3a841758568adf180cc422a74784c9ffcdba3760f1a6a509661fd3bf3a1fbbe29d36c49304a872f
   languageName: node
   linkType: hard
 
@@ -5618,9 +5618,9 @@ __metadata:
   linkType: hard
 
 "core-js@npm:^3.6.5":
-  version: 3.16.4
-  resolution: "core-js@npm:3.16.4"
-  checksum: a85086b088ebeda5b0634a884e4a9540da1f46bc85ff2c45e284ff3383afdb30ea7ad00f74a9e14538c1004eb33dd2b0b945eff1c188a8fd33ca979dc4877855
+  version: 3.17.1
+  resolution: "core-js@npm:3.17.1"
+  checksum: e71e2546126856a88d525240e2d1ca0e8d283660d46b81064a730e26c212c9a16541aca3ebd96fff8d1b1b1c7739c2c2a993fa333653404998eaf9bfdbeef7d2
   languageName: node
   linkType: hard
 
@@ -6615,9 +6615,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.564, electron-to-chromium@npm:^1.3.811":
-  version: 1.3.826
-  resolution: "electron-to-chromium@npm:1.3.826"
-  checksum: 40a5a6548b7b60848ea045afed6c2389fd3228d8de246c62218f30dac6bbaff90367fdbee3f20639e6cac1fad2ef33f39b56a9fb6f99de226c16b395d513171f
+  version: 1.3.827
+  resolution: "electron-to-chromium@npm:1.3.827"
+  checksum: e16fd4f5ade95f92712a13fe5bd6bac0f58ed6e37729094dfeefd95cf78be8f722431d6014ff3478c03706bbf2d2d8e44546b0ed83a9a78d635cb63c083129bf
   languageName: node
   linkType: hard
 
@@ -7288,7 +7288,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.11.0, eslint@npm:^7.27.0":
+"eslint@npm:^7.11.0, eslint@npm:^7.20.0, eslint@npm:^7.27.0":
   version: 7.32.0
   resolution: "eslint@npm:7.32.0"
   dependencies:
@@ -13518,8 +13518,8 @@ fsevents@^1.2.7:
   linkType: hard
 
 "rc-collapse@npm:~3.1.0":
-  version: 3.1.1
-  resolution: "rc-collapse@npm:3.1.1"
+  version: 3.1.2
+  resolution: "rc-collapse@npm:3.1.2"
   dependencies:
     "@babel/runtime": ^7.10.1
     classnames: 2.x
@@ -13529,7 +13529,7 @@ fsevents@^1.2.7:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 14b6f3107f435b65e4e6e8d27b74d52f1a4aa411d000a8ed12ab4b24145032cb4ed0efa5d6c6c68e594cf8c94fa8dd76e78130912a1436f3fc2a61dddba6d32d
+  checksum: b7f5e423661f4b34cc44c330efc905d77e243b78a30b988a83adc330325d1728c6dd5731bdb2ecb6caef04b14f62b7ff9088b484eb17b349bd9cdba9e58bb0f3
   languageName: node
   linkType: hard
 
@@ -13758,8 +13758,8 @@ fsevents@^1.2.7:
   linkType: hard
 
 "rc-resize-observer@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "rc-resize-observer@npm:1.0.0"
+  version: 1.0.1
+  resolution: "rc-resize-observer@npm:1.0.1"
   dependencies:
     "@babel/runtime": ^7.10.1
     classnames: ^2.2.1
@@ -13768,7 +13768,7 @@ fsevents@^1.2.7:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: 562a043b52d04d68954fade3b77146af076670bb801a1f0a6066c2d9ef4ff43fb68b043e9e2a1b8a80f213e2116d1db261ede8dab3a27c8acbc55d19d09b4dc5
+  checksum: 858aecae332a4beb293f7425106c8f13cc0aeee31976c56ef4819fa7184bf664d891b79140b0163164a1c7b90515acfbaec77cb41dd1f67f168eef8f3c27b73e
   languageName: node
   linkType: hard
 
@@ -14323,7 +14323,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:1 || 2, readable-stream@npm:^2.0.0, readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.2, readable-stream@npm:^2.0.6, readable-stream@npm:^2.1.5, readable-stream@npm:^2.2.2, readable-stream@npm:^2.3.3, readable-stream@npm:^2.3.6, readable-stream@npm:~2.3.6":
+"readable-stream@npm:1 || 2, readable-stream@npm:^2.0.0, readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.2, readable-stream@npm:^2.1.5, readable-stream@npm:^2.2.2, readable-stream@npm:^2.3.3, readable-stream@npm:^2.3.6, readable-stream@npm:~2.3.6":
   version: 2.3.7
   resolution: "readable-stream@npm:2.3.7"
   dependencies:
@@ -15730,6 +15730,8 @@ resolve@^2.0.0-next.3:
     "@testing-library/jest-dom": ^5.14.1
     "@testing-library/react": ^12.0.0
     antd: ^4.16.8
+    eslint: ^7.20.0
+    eslint-config-react-app: ^6.0.0
     eslint-config-semistandard: ~15.0.1
     eslint-config-standard: ~16.0.2
     eslint-plugin-import: ~2.22.1
