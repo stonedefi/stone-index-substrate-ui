@@ -8,5 +8,6 @@
         "name": "Vec<u8>",
         "components": "Vec<StoneIndexComponent>",
         "owner": "AccountId"
-    }
+    },
+    "IndexId": "u32"
 }
